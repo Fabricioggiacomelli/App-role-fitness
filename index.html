@@ -1,75 +1,93 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FitConnect</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitConnect</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <div class="app">
 
   <!-- LOGIN -->
-  <section id="login" class="screen active center">
-    <h1>FitConnect</h1>
-    <p>Conecte-se ao seu treino</p>
-    <input type="text" placeholder="Email">
-    <input type="password" placeholder="Senha">
-    <button onclick="entrar()">Entrar</button>
+  <section id="login" class="screen active center fade">
+    <div class="login-box">
+      <h1>FitConnect</h1>
+      <p>Treine. Conecte. Evolua.</p>
+
+      <input placeholder="Email">
+      <input placeholder="Senha" type="password">
+
+      <button class="btn-primary" onclick="entrar()">Entrar</button>
+    </div>
   </section>
 
   <!-- APP -->
-  <section id="mainApp" class="hidden">
+  <section id="mainApp" class="hidden fade">
 
-    <header>
-      <h2 id="title">Início</h2>
-    </header>
-
-    <main>
+    <main id="pages">
 
       <!-- HOME -->
-      <section id="home" class="tab active">
-        <div class="card">
-          <h3>🏃 Run Club</h3>
-          <p>Hoje 19:00 • 23 pessoas</p>
-          <button onclick="participar(this)">Participar</button>
-        </div>
-      </section>
+      <div id="home" class="page active">
 
-      <!-- MAPA -->
-      <section id="mapa" class="tab">
-        <div class="map">
-          <div class="pin" style="top:30%; left:40%">🏃</div>
-          <div class="pin" style="top:60%; left:70%">🚴</div>
+        <div class="card big">
+          <h3>🏃 Run Club</h3>
+          <p>Hoje • 19:00</p>
+          <span>34 pessoas</span>
         </div>
-      </section>
+
+        <div class="card">
+          <h3>🚴 Pedal</h3>
+          <p>Hoje • 20:00</p>
+        </div>
+
+      </div>
+
+      <!-- MAP -->
+      <div id="map" class="page">
+        <div class="map">
+          <div class="pin pulse" style="top:40%; left:50%"></div>
+        </div>
+      </div>
 
       <!-- CHAT -->
-      <section id="chat" class="tab">
-        <div class="chat-box" id="chatBox"></div>
-        <div class="chat-input">
-          <input id="msg" placeholder="Digite...">
-          <button onclick="enviar()">Enviar</button>
-        </div>
-      </section>
+      <div id="chat" class="page">
+        <div class="chat">
 
-      <!-- PERFIL -->
-      <section id="perfil" class="tab">
-        <h3>Fabrício</h3>
-        <p>🏃 120 km</p>
-        <p>🚴 80 km</p>
-        <p>🔥 32 treinos</p>
-      </section>
+          <div class="bubble left">Bora treinar hoje?</div>
+          <div class="bubble right">Bora 🔥</div>
+
+        </div>
+
+        <div class="chat-input">
+          <input placeholder="Mensagem">
+          <button>↑</button>
+        </div>
+      </div>
+
+      <!-- PROFILE -->
+      <div id="profile" class="page">
+        <div class="profile">
+          <div class="avatar">F</div>
+          <h2>Fabrício</h2>
+
+          <div class="stats">
+            <div><b>120</b><span>KM</span></div>
+            <div><b>32</b><span>Treinos</span></div>
+            <div><b>8</b><span>Eventos</span></div>
+          </div>
+        </div>
+      </div>
 
     </main>
 
     <!-- NAV -->
-    <nav>
-      <button onclick="trocar('home')">🏠</button>
-      <button onclick="trocar('mapa')">📍</button>
-      <button onclick="trocar('chat')">💬</button>
-      <button onclick="trocar('perfil')">👤</button>
+    <nav class="tabbar">
+      <button onclick="go('home')">🏠</button>
+      <button onclick="go('map')">📍</button>
+      <button onclick="go('chat')">💬</button>
+      <button onclick="go('profile')">👤</button>
     </nav>
 
   </section>
