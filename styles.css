@@ -1,0 +1,119 @@
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0A0A0C;
+  color: white;
+}
+
+.app {
+  max-width: 400px;
+  margin: auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* LOGIN */
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
+}
+
+input {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+}
+
+/* HEADER */
+header {
+  padding: 10px;
+  background: #111;
+  text-align: center;
+}
+
+/* MAIN */
+main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+}
+
+.tab {
+  display: none;
+}
+
+.tab.active {
+  display: block;
+}
+
+/* CARD */
+.card {
+  background: #1A1C1F;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+/* MAP */
+.map {
+  height: 400px;
+  background: #222;
+  position: relative;
+  border-radius: 12px;
+}
+
+.pin {
+  position: absolute;
+  font-size: 24px;
+}
+
+/* CHAT */
+.chat-box {
+  height: 300px;
+  overflow-y: auto;
+}
+
+.msg {
+  background: #1A1C1F;
+  padding: 8px;
+  border-radius: 8px;
+  margin: 5px 0;
+}
+
+.chat-input {
+  display: flex;
+}
+
+.chat-input input {
+  flex: 1;
+}
+
+/* NAV */
+nav {
+  display: flex;
+  justify-content: space-around;
+  background: #111;
+  padding: 10px;
+}
+
+button {
+  background: #00FF88;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+nav button {
+  background: none;
+  color: white;
+}
+
+/* UTIL */
+.hidden {
+  display: none;
+}
