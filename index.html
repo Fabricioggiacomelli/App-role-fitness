@@ -1,99 +1,567 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FitConnect</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Pulse — Fitness Social</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="app-shell">
+    <div class="phone-frame">
 
-<div class="app">
+      <main class="app" id="app">
 
-  <!-- LOGIN -->
-  <section id="login" class="screen active center fade">
-    <div class="login-box">
-      <h1>FitConnect</h1>
-      <p>Treine. Conecte. Evolua.</p>
+        <!-- AUTH / WELCOME -->
+        <section class="screen active" id="screen-welcome">
+          <div class="statusbar-space"></div>
 
-      <input placeholder="Email">
-      <input placeholder="Senha" type="password">
+          <div class="welcome-hero">
+            <div class="welcome-overlay"></div>
+            <div class="brand-top">PULSE</div>
 
-      <button class="btn-primary" onclick="entrar()">Entrar</button>
-    </div>
-  </section>
+            <div class="welcome-content">
+              <div class="dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+              </div>
 
-  <!-- APP -->
-  <section id="mainApp" class="hidden fade">
+              <h1 class="welcome-title">
+                Suas melhores conexões<br />
+                começam no treino.
+              </h1>
+              <p class="welcome-subtitle">
+                Corrida, academia, yoga, pilates, pedal e comunidades fitness perto de você.
+              </p>
 
-    <main id="pages">
-
-      <!-- HOME -->
-      <div id="home" class="page active">
-
-        <div class="card big">
-          <h3>🏃 Run Club</h3>
-          <p>Hoje • 19:00</p>
-          <span>34 pessoas</span>
-        </div>
-
-        <div class="card">
-          <h3>🚴 Pedal</h3>
-          <p>Hoje • 20:00</p>
-        </div>
-
-      </div>
-
-      <!-- MAP -->
-      <div id="map" class="page">
-        <div class="map">
-          <div class="pin pulse" style="top:40%; left:50%"></div>
-        </div>
-      </div>
-
-      <!-- CHAT -->
-      <div id="chat" class="page">
-        <div class="chat">
-
-          <div class="bubble left">Bora treinar hoje?</div>
-          <div class="bubble right">Bora 🔥</div>
-
-        </div>
-
-        <div class="chat-input">
-          <input placeholder="Mensagem">
-          <button>↑</button>
-        </div>
-      </div>
-
-      <!-- PROFILE -->
-      <div id="profile" class="page">
-        <div class="profile">
-          <div class="avatar">F</div>
-          <h2>Fabrício</h2>
-
-          <div class="stats">
-            <div><b>120</b><span>KM</span></div>
-            <div><b>32</b><span>Treinos</span></div>
-            <div><b>8</b><span>Eventos</span></div>
+              <div class="welcome-actions">
+                <button class="btn btn-gradient" data-go="screen-signup-step1">
+                  Criar Conta
+                </button>
+                <button class="btn btn-dark" data-go="screen-login">
+                  Entrar
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </section>
 
-    </main>
+        <!-- LOGIN -->
+        <section class="screen" id="screen-login">
+          <div class="topbar">
+            <button class="icon-btn" data-back="screen-welcome">‹</button>
+            <div class="brand brand-center">PULSE</div>
+            <div class="topbar-space"></div>
+          </div>
 
-    <!-- NAV -->
-    <nav class="tabbar">
-      <button onclick="go('home')">🏠</button>
-      <button onclick="go('map')">📍</button>
-      <button onclick="go('chat')">💬</button>
-      <button onclick="go('profile')">👤</button>
-    </nav>
+          <div class="auth-wrap">
+            <div class="auth-head">
+              <h2>Entrar</h2>
+              <p>Acesse sua conta para encontrar seu próximo treino.</p>
+            </div>
 
-  </section>
+            <div class="form-group">
+              <label for="loginEmail">E-mail</label>
+              <input id="loginEmail" type="email" placeholder="seuemail@exemplo.com" />
+            </div>
 
-</div>
+            <div class="form-group">
+              <label for="loginPassword">Senha</label>
+              <div class="password-wrap">
+                <input id="loginPassword" type="password" placeholder="Digite sua senha" />
+                <button class="toggle-password" type="button" data-toggle="loginPassword">Mostrar</button>
+              </div>
+            </div>
 
-<script src="script.js"></script>
+            <button class="btn btn-gradient" id="loginBtn">Entrar</button>
+
+            <div class="divider">
+              <span>ou</span>
+            </div>
+
+            <button class="btn btn-outline">Continuar com Google</button>
+
+            <p class="bottom-text">
+              Ainda não tem conta?
+              <button class="text-link" data-go="screen-signup-step1">Criar conta</button>
+            </p>
+          </div>
+        </section>
+
+        <!-- SIGNUP STEP 1 -->
+        <section class="screen" id="screen-signup-step1">
+          <div class="topbar">
+            <button class="icon-btn" data-back="screen-welcome">‹</button>
+            <div class="brand brand-center">PULSE</div>
+            <div class="topbar-space"></div>
+          </div>
+
+          <div class="progress">
+            <div class="progress-fill step-1"></div>
+          </div>
+
+          <div class="auth-wrap">
+            <div class="auth-head">
+              <h2><strong>Meu</strong> nome</h2>
+              <p>Vamos começar criando seu perfil fitness.</p>
+            </div>
+
+            <div class="form-group">
+              <label for="signupName">Nome completo</label>
+              <input id="signupName" type="text" placeholder="Seu nome completo" />
+            </div>
+
+            <button class="btn btn-gradient next-step" data-next="screen-signup-step2">
+              Continuar
+            </button>
+          </div>
+        </section>
+
+        <!-- SIGNUP STEP 2 -->
+        <section class="screen" id="screen-signup-step2">
+          <div class="topbar">
+            <button class="icon-btn" data-back="screen-signup-step1">‹</button>
+            <div class="brand brand-center">PULSE</div>
+            <div class="topbar-space"></div>
+          </div>
+
+          <div class="progress">
+            <div class="progress-fill step-2"></div>
+          </div>
+
+          <div class="auth-wrap">
+            <div class="auth-head">
+              <h2><strong>Minha</strong> idade</h2>
+              <p>Isso ajuda o app a recomendar melhor seus treinos e eventos.</p>
+            </div>
+
+            <div class="form-group">
+              <label for="signupBirth">Data de nascimento</label>
+              <input id="signupBirth" type="text" placeholder="DD / MM / AAAA" maxlength="10" />
+            </div>
+
+            <button class="btn btn-gradient next-step" data-next="screen-signup-step3">
+              Continuar
+            </button>
+          </div>
+        </section>
+
+        <!-- SIGNUP STEP 3 -->
+        <section class="screen" id="screen-signup-step3">
+          <div class="topbar">
+            <button class="icon-btn" data-back="screen-signup-step2">‹</button>
+            <div class="brand brand-center">PULSE</div>
+            <div class="topbar-space"></div>
+          </div>
+
+          <div class="progress">
+            <div class="progress-fill step-3"></div>
+          </div>
+
+          <div class="auth-wrap">
+            <div class="auth-head">
+              <h2><strong>Meu</strong> telefone</h2>
+              <p>Vamos usar seu número para validação e recuperação de conta.</p>
+            </div>
+
+            <div class="form-group">
+              <label for="signupPhone">Número de telefone</label>
+              <div class="phone-field">
+                <div class="country-box">🇧🇷 +55</div>
+                <input id="signupPhone" type="text" placeholder="(11) 99999-9999" maxlength="15" />
+              </div>
+            </div>
+
+            <button class="btn btn-gradient next-step" data-next="screen-signup-step4">
+              Continuar
+            </button>
+          </div>
+        </section>
+
+        <!-- SIGNUP STEP 4 -->
+        <section class="screen" id="screen-signup-step4">
+          <div class="topbar">
+            <button class="icon-btn" data-back="screen-signup-step3">‹</button>
+            <div class="brand brand-center">PULSE</div>
+            <div class="topbar-space"></div>
+          </div>
+
+          <div class="progress">
+            <div class="progress-fill step-4"></div>
+          </div>
+
+          <div class="auth-wrap">
+            <div class="auth-head">
+              <h2>Código</h2>
+              <p>
+                Insira o código de 4 dígitos enviado para seu telefone via WhatsApp.
+              </p>
+            </div>
+
+            <div class="otp-grid">
+              <input class="otp" type="text" maxlength="1" inputmode="numeric" />
+              <input class="otp" type="text" maxlength="1" inputmode="numeric" />
+              <input class="otp" type="text" maxlength="1" inputmode="numeric" />
+              <input class="otp" type="text" maxlength="1" inputmode="numeric" />
+            </div>
+
+            <p class="resend-text">
+              Não recebeu um código?
+              <span>Reenviar em 27s</span>
+            </p>
+
+            <button class="btn btn-gradient next-step" data-next="screen-signup-step5">
+              Continuar
+            </button>
+          </div>
+        </section>
+
+        <!-- SIGNUP STEP 5 -->
+        <section class="screen" id="screen-signup-step5">
+          <div class="topbar">
+            <button class="icon-btn" data-back="screen-signup-step4">‹</button>
+            <div class="brand brand-center">PULSE</div>
+            <div class="topbar-space"></div>
+          </div>
+
+          <div class="progress">
+            <div class="progress-fill step-5"></div>
+          </div>
+
+          <div class="auth-wrap">
+            <div class="auth-head">
+              <h2><strong>Sua</strong> senha</h2>
+              <p>Crie uma senha segura para proteger sua conta.</p>
+            </div>
+
+            <div class="form-group">
+              <label for="signupPassword">Senha</label>
+              <div class="password-wrap">
+                <input id="signupPassword" type="password" placeholder="Digite sua senha" />
+                <button class="toggle-password" type="button" data-toggle="signupPassword">Mostrar</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="signupPasswordConfirm">Confirmar senha</label>
+              <input id="signupPasswordConfirm" type="password" placeholder="Confirme sua senha" />
+            </div>
+
+            <p class="password-hint">
+              Sua senha deve conter: 8 caracteres, 1 número, 1 caractere especial e 1 letra maiúscula.
+            </p>
+
+            <button class="btn btn-gradient next-step" data-next="screen-signup-step6">
+              Continuar
+            </button>
+          </div>
+        </section>
+
+        <!-- SIGNUP STEP 6 -->
+        <section class="screen" id="screen-signup-step6">
+          <div class="topbar">
+            <button class="icon-btn" data-back="screen-signup-step5">‹</button>
+            <div class="brand brand-center">PULSE</div>
+            <div class="topbar-space"></div>
+          </div>
+
+          <div class="progress">
+            <div class="progress-fill step-6"></div>
+          </div>
+
+          <div class="auth-wrap">
+            <div class="auth-head">
+              <h2><strong>Meu</strong> usuário</h2>
+              <p>Escolha um nome único para aparecer no app.</p>
+            </div>
+
+            <div class="form-group">
+              <label for="signupUsername">Nome de usuário</label>
+              <input id="signupUsername" type="text" placeholder="@seu_usuario" />
+            </div>
+
+            <p class="terms-text">
+              Ao criar uma conta, você concorda com os
+              <a href="#">Termos de Uso</a> e
+              <a href="#">Privacidade</a>.
+            </p>
+
+            <button class="btn btn-gradient" id="finishSignupBtn">
+              Finalizar Cadastro
+            </button>
+          </div>
+        </section>
+
+        <!-- WELCOME AFTER SIGNUP -->
+        <section class="screen" id="screen-onboarding-finish">
+          <div class="center-screen">
+            <div class="brand big-brand">PULSE</div>
+            <h2 class="finish-title">Bem-vindo ao PULSE</h2>
+            <p class="finish-subtitle">
+              Agora vamos descobrir seus gostos para recomendar treinos, parceiros e comunidades perfeitas para você.
+            </p>
+            <button class="btn btn-gradient" id="goToAppBtn">Iniciar</button>
+          </div>
+        </section>
+
+        <!-- MAIN APP -->
+        <section class="screen app-main" id="screen-main-app">
+          <header class="app-header">
+            <div>
+              <p class="header-mini">Bom treino,</p>
+              <h2 id="userGreeting">Fabrício</h2>
+            </div>
+            <button class="profile-mini">FG</button>
+          </header>
+
+          <div class="home-scroll tab-content active" id="tab-home">
+            <section class="hero-card">
+              <div class="hero-badge">Fitness Social</div>
+              <h3>Descubra treinos, pessoas e comunidades perto de você</h3>
+              <p>
+                Corrida, academia, pilates, yoga, pedal e muito mais no mesmo lugar.
+              </p>
+            </section>
+
+            <section class="section-block">
+              <div class="section-title-row">
+                <h4>Em alta hoje</h4>
+                <button class="ghost-link">Ver tudo</button>
+              </div>
+
+              <div class="event-card featured">
+                <div class="event-top">
+                  <span class="event-tag">RUN CLUB</span>
+                  <span class="event-distance">5 KM</span>
+                </div>
+                <h3>Campinas Sunset Run</h3>
+                <p>Hoje • 19:00 • Taquaral</p>
+                <div class="event-bottom">
+                  <span>48 pessoas vão</span>
+                  <button class="mini-btn join-btn">Participar</button>
+                </div>
+              </div>
+
+              <div class="event-card">
+                <div class="event-top">
+                  <span class="event-tag">MUSCULAÇÃO</span>
+                  <span class="event-distance">INTERMEDIÁRIO</span>
+                </div>
+                <h3>Treino em dupla</h3>
+                <p>Hoje • 20:15 • Smart Fit Cambuí</p>
+                <div class="event-bottom">
+                  <span>12 pessoas interessadas</span>
+                  <button class="mini-btn join-btn">Participar</button>
+                </div>
+              </div>
+
+              <div class="event-card">
+                <div class="event-top">
+                  <span class="event-tag">YOGA</span>
+                  <span class="event-distance">RELAX</span>
+                </div>
+                <h3>Yoga no parque</h3>
+                <p>Amanhã • 07:00 • Parque Portugal</p>
+                <div class="event-bottom">
+                  <span>21 pessoas vão</span>
+                  <button class="mini-btn join-btn">Participar</button>
+                </div>
+              </div>
+            </section>
+
+            <section class="section-block">
+              <div class="section-title-row">
+                <h4>Parceiros de treino</h4>
+                <button class="ghost-link">Explorar</button>
+              </div>
+
+              <div class="people-scroll">
+                <div class="person-card">
+                  <div class="avatar-gradient">L</div>
+                  <strong>Lucas</strong>
+                  <span>Corrida • Pace 5:15</span>
+                  <button class="mini-btn mini-btn-light">Conectar</button>
+                </div>
+
+                <div class="person-card">
+                  <div class="avatar-gradient">A</div>
+                  <strong>Ana</strong>
+                  <span>Pilates • Manhã</span>
+                  <button class="mini-btn mini-btn-light">Conectar</button>
+                </div>
+
+                <div class="person-card">
+                  <div class="avatar-gradient">R</div>
+                  <strong>Rafa</strong>
+                  <span>Academia • Noite</span>
+                  <button class="mini-btn mini-btn-light">Conectar</button>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <div class="tab-content" id="tab-communities">
+            <section class="page-head">
+              <h3>Comunidades</h3>
+              <p>Encontre grupos para treinar junto.</p>
+            </section>
+
+            <div class="community-card">
+              <div>
+                <h4>Campinas Run Club</h4>
+                <p>1.248 membros • Corrida</p>
+              </div>
+              <button class="mini-btn">Entrar</button>
+            </div>
+
+            <div class="community-card">
+              <div>
+                <h4>Pedal Interior</h4>
+                <p>892 membros • Bike</p>
+              </div>
+              <button class="mini-btn">Entrar</button>
+            </div>
+
+            <div class="community-card">
+              <div>
+                <h4>Yoga & Flow</h4>
+                <p>504 membros • Yoga</p>
+              </div>
+              <button class="mini-btn">Entrar</button>
+            </div>
+
+            <div class="community-card">
+              <div>
+                <h4>Hyrox Brasil</h4>
+                <p>322 membros • Performance</p>
+              </div>
+              <button class="mini-btn">Entrar</button>
+            </div>
+          </div>
+
+          <div class="tab-content" id="tab-chat">
+            <section class="page-head">
+              <h3>Mensagens</h3>
+              <p>Converse com parceiros e grupos.</p>
+            </section>
+
+            <div class="chat-list">
+              <div class="chat-item" data-open-chat="Lucas">
+                <div class="chat-avatar">L</div>
+                <div class="chat-info">
+                  <strong>Lucas</strong>
+                  <span>Fechou corrida hoje às 19h?</span>
+                </div>
+                <small>21:14</small>
+              </div>
+
+              <div class="chat-item" data-open-chat="Campinas Run Club">
+                <div class="chat-avatar">C</div>
+                <div class="chat-info">
+                  <strong>Campinas Run Club</strong>
+                  <span>Aquecimento começa às 18:45</span>
+                </div>
+                <small>20:50</small>
+              </div>
+
+              <div class="chat-item" data-open-chat="Ana">
+                <div class="chat-avatar">A</div>
+                <div class="chat-info">
+                  <strong>Ana</strong>
+                  <span>Bora pilates amanhã cedo?</span>
+                </div>
+                <small>Ontem</small>
+              </div>
+            </div>
+
+            <div class="chat-window">
+              <div class="chat-window-head">
+                <strong id="activeChatName">Lucas</strong>
+                <span>Online</span>
+              </div>
+
+              <div class="chat-messages" id="chatMessages">
+                <div class="bubble bubble-left">Fechou treino hoje?</div>
+                <div class="bubble bubble-right">Fechou 🔥</div>
+                <div class="bubble bubble-left">19h no Taquaral?</div>
+              </div>
+
+              <div class="chat-input-wrap">
+                <input id="chatInput" type="text" placeholder="Digite uma mensagem..." />
+                <button class="send-btn" id="sendMessageBtn">↑</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-content" id="tab-profile">
+            <section class="profile-header">
+              <div class="profile-avatar-large">FG</div>
+              <h3 id="profileName">Fabrício</h3>
+              <p>@fabriciofit</p>
+            </section>
+
+            <div class="profile-stats">
+              <div class="stat-box">
+                <strong>42</strong>
+                <span>Treinos</span>
+              </div>
+              <div class="stat-box">
+                <strong>18</strong>
+                <span>Eventos</span>
+              </div>
+              <div class="stat-box">
+                <strong>126</strong>
+                <span>Conexões</span>
+              </div>
+            </div>
+
+            <div class="profile-section">
+              <h4>Preferências</h4>
+              <div class="chips">
+                <span class="chip">Corrida</span>
+                <span class="chip">Academia</span>
+                <span class="chip">Hyrox</span>
+                <span class="chip">Performance</span>
+              </div>
+            </div>
+
+            <div class="profile-section">
+              <h4>Sobre</h4>
+              <p>
+                Buscando treinos intensos, corridas em grupo e parceiros focados em evolução.
+              </p>
+            </div>
+
+            <button class="btn btn-gradient btn-full">Editar perfil</button>
+          </div>
+
+          <nav class="bottom-nav">
+            <button class="nav-item active" data-tab="tab-home">
+              <span>⌂</span>
+              <small>Início</small>
+            </button>
+            <button class="nav-item" data-tab="tab-communities">
+              <span>◉</span>
+              <small>Comunidades</small>
+            </button>
+            <button class="nav-item" data-tab="tab-chat">
+              <span>✉</span>
+              <small>Chat</small>
+            </button>
+            <button class="nav-item" data-tab="tab-profile">
+              <span>☻</span>
+              <small>Perfil</small>
+            </button>
+          </nav>
+        </section>
+
+      </main>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
