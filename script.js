@@ -5,15 +5,30 @@ const nextButtons = document.querySelectorAll(".next-step");
 const togglePasswordButtons = document.querySelectorAll("[data-toggle]");
 const navItems = document.querySelectorAll(".nav-item");
 const tabContents = document.querySelectorAll(".tab-content");
-const joinButtons = document.querySelectorAll(".join-btn");
 
 const signupData = {
   name: "",
   birth: "",
   phone: "",
   username: "",
-  password: ""
+  password: "",
+  interests: [],
+  city: "",
+  neighborhood: ""
 };
+
+const fakeFriends = [
+  "Lucas",
+  "Ana",
+  "Rafa",
+  "Bruno",
+  "Camila",
+  "Mariana",
+  "João",
+  "Pedro",
+  "Julia",
+  "Bianca"
+];
 
 function showScreen(id) {
   screens.forEach(screen => screen.classList.remove("active"));
@@ -126,15 +141,48 @@ document.getElementById("finishSignupBtn").addEventListener("click", () => {
     return;
   }
 
-  signupData.username = username;
-
-  document.getElementById("userGreeting").textContent = signupData.name || "Usuário";
-  document.getElementById("profileName").textContent = signupData.name || "Usuário";
-
+  signupData.username = username.startsWith("@") ? username : `@${username}`;
+  updateProfileUI();
   showScreen("screen-onboarding-finish");
 });
 
-document.getElementById("goToAppBtn").addEventListener("click", () => {
+document.getElementById("goToInterestsBtn").addEventListener("click", () => {
+  showScreen("screen-interests");
+});
+
+document.querySelectorAll(".interest-chip").forEach(chip => {
+  chip.addEventListener("click", () => {
+    chip.classList.toggle("active");
+  });
+});
+
+document.getElementById("saveInterestsBtn").addEventListener("click", () => {
+  const selected = [...document.querySelectorAll(".interest-chip.active")].map(
+    item => item.dataset.interest
+  );
+
+  if (selected.length === 0) {
+    alert("Selecione pelo menos um interesse.");
+    return;
+  }
+
+  signupData.interests = selected;
+  updateProfileUI();
+  showScreen("screen-location");
+});
+
+document.getElementById("saveLocationBtn").addEventListener("click", () => {
+  const city = document.getElementById("signupCity").value.trim();
+  const neighborhood = document.getElementById("signupNeighborhood").value.trim();
+
+  if (!city || !neighborhood) {
+    alert("Preencha cidade e bairro.");
+    return;
+  }
+
+  signupData.city = city;
+  signupData.neighborhood = neighborhood;
+  updateProfileUI();
   showScreen("screen-main-app");
 });
 
@@ -147,8 +195,61 @@ document.getElementById("loginBtn").addEventListener("click", () => {
     return;
   }
 
+  if (!signupData.name) {
+    signupData.name = "Fabrício";
+    signupData.username = "@fabriciofit";
+    signupData.interests = ["Corrida", "Academia", "Hyrox"];
+    signupData.city = "Campinas";
+    signupData.neighborhood = "Cambuí";
+  }
+
+  updateProfileUI();
   showScreen("screen-main-app");
 });
+
+function getInitials(name) {
+  if (!name) return "PU";
+  const parts = name.trim().split(" ").filter(Boolean);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[1][0]).toUpperCase();
+}
+
+function updateProfileUI() {
+  const name = signupData.name || "Usuário";
+  const username = signupData.username || "@usuario";
+  const initials = getInitials(name);
+
+  document.getElementById("userGreeting").textContent = name.split(" ")[0];
+  document.getElementById("profileName").textContent = name;
+  document.getElementById("publishUserName").textContent = name;
+  document.getElementById("profileUsername").textContent = username;
+  document.getElementById("headerInitials").textContent = initials;
+  document.getElementById("profileAvatar").textContent = initials;
+  document.getElementById("publishAvatar").textContent = initials;
+
+  const interestsText = signupData.interests.length
+    ? signupData.interests.join(", ")
+    : "Corrida, academia e performance";
+
+  document.getElementById("heroPersonalization").textContent =
+    `${interestsText} perto de você em ${signupData.city || "sua cidade"}.`;
+
+  document.getElementById("profileLocation").textContent =
+    signupData.city && signupData.neighborhood
+      ? `${signupData.city} • ${signupData.neighborhood}`
+      : "Defina sua localização";
+
+  const chipsContainer = document.getElementById("profileChips");
+  chipsContainer.innerHTML = "";
+
+  const interests = signupData.interests.length ? signupData.interests : ["Corrida", "Academia"];
+  interests.forEach(item => {
+    const chip = document.createElement("span");
+    chip.className = "chip";
+    chip.textContent = item;
+    chipsContainer.appendChild(chip);
+  });
+}
 
 navItems.forEach(item => {
   item.addEventListener("click", () => {
@@ -160,7 +261,7 @@ navItems.forEach(item => {
   });
 });
 
-joinButtons.forEach(button => {
+document.querySelectorAll(".join-btn").forEach(button => {
   button.addEventListener("click", () => {
     if (button.textContent === "Participar") {
       button.textContent = "Confirmado";
@@ -171,6 +272,61 @@ joinButtons.forEach(button => {
     }
   });
 });
+
+document.querySelectorAll(".invite-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    const eventCard = button.closest(".event-card");
+    const eventName = eventCard.dataset.eventName;
+    const friend = fakeFriends[Math.floor(Math.random() * fakeFriends.length)];
+
+    navItems.forEach(i => i.classList.remove("active"));
+    tabContents.forEach(tab => tab.classList.remove("active"));
+    document.querySelector('[data-tab="tab-chat"]').classList.add("active");
+    document.getElementById("tab-chat").classList.add("active");
+
+    document.getElementById("activeChatName").textContent = friend;
+
+    const messages = document.getElementById("chatMessages");
+    const bubble = document.createElement("div");
+    bubble.className = "bubble bubble-right";
+    bubble.textContent = `Me inscrevi em ${eventName}, não quer participar comigo?`;
+    messages.appendChild(bubble);
+    messages.scrollTop = messages.scrollHeight;
+
+    addChatPreview(friend, `Me inscrevi em ${eventName}, não quer participar comigo?`, "agora");
+  });
+});
+
+function addChatPreview(name, message, time) {
+  const chatList = document.getElementById("chatList");
+  const existing = [...chatList.querySelectorAll(".chat-item")].find(
+    item => item.dataset.openChat === name
+  );
+
+  if (existing) {
+    existing.querySelector(".chat-info span").textContent = message;
+    existing.querySelector("small").textContent = time;
+    return;
+  }
+
+  const item = document.createElement("div");
+  item.className = "chat-item";
+  item.dataset.openChat = name;
+  item.innerHTML = `
+    <div class="chat-avatar">${name.charAt(0).toUpperCase()}</div>
+    <div class="chat-info">
+      <strong>${name}</strong>
+      <span>${message}</span>
+    </div>
+    <small>${time}</small>
+  `;
+
+  item.addEventListener("click", () => {
+    document.getElementById("activeChatName").textContent = name;
+  });
+
+  chatList.prepend(item);
+}
 
 document.querySelectorAll(".chat-item").forEach(item => {
   item.addEventListener("click", () => {
@@ -198,6 +354,55 @@ function sendMessage() {
   messages.scrollTop = messages.scrollHeight;
   input.value = "";
 }
+
+document.getElementById("publishBtn").addEventListener("click", () => {
+  const input = document.getElementById("postInput");
+  const text = input.value.trim();
+
+  if (!text) {
+    alert("Escreva algo para publicar.");
+    return;
+  }
+
+  const feed = document.getElementById("socialFeed");
+  const article = document.createElement("article");
+  article.className = "post-card";
+
+  const initials = getInitials(signupData.name || "Usuário");
+  const username = signupData.username || "@usuario";
+  const name = signupData.name || "Usuário";
+
+  article.innerHTML = `
+    <div class="post-head">
+      <div class="chat-avatar">${initials}</div>
+      <div>
+        <strong>${name}</strong>
+        <p>${username} • agora</p>
+      </div>
+    </div>
+    <div class="post-body">${text}</div>
+    <div class="post-footer">
+      <button>❤ 0</button>
+      <button>💬 0</button>
+      <button>↗ Compartilhar</button>
+    </div>
+  `;
+
+  feed.prepend(article);
+  input.value = "";
+});
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  const confirmLogout = confirm("Deseja sair da conta?");
+  if (!confirmLogout) return;
+
+  navItems.forEach(i => i.classList.remove("active"));
+  tabContents.forEach(tab => tab.classList.remove("active"));
+  document.querySelector('[data-tab="tab-home"]').classList.add("active");
+  document.getElementById("tab-home").classList.add("active");
+
+  showScreen("screen-welcome");
+});
 
 document.getElementById("signupBirth").addEventListener("input", (e) => {
   let v = e.target.value.replace(/\D/g, "").slice(0, 8);
@@ -233,3 +438,5 @@ otpInputs.forEach((input, index) => {
     }
   });
 });
+
+updateProfileUI();
